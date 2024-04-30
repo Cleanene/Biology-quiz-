@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trivia Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .question {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .option {
+      font-size: 18px;
+      margin: 5px;
+      padding: 10px 20px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .option:hover {
+      background-color: #e0e0e0;
+    }
+
+    .feedback {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .next-question {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .next-question:hover {
+      background-color: #0056b3;
+    }
+
+    .diagram {
+      max-width: 100%;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>😎</h1>
+    <div class="question"></div>
+    <div class="options"></div>
+    <div class="feedback"></div>
+    <button class="next-question">Next Question</button>
+  </div>
+
+  <script>
+    const questions = [
+      { question: 'What is the powerhouse of the cell?', answers: ['A. Mitochondria', 'B. Nucleus', 'C. Ribosome', 'D. Endoplasmic reticulum'], correctAnswer: 'A. Mitochondria' },
+      { question: 'What is the process by which plants make their own food?', answers: ['A. Photosynthesis', 'B. Respiration', 'C. Digestion', 'D. Fermentation'], correctAnswer: 'A. Photosynthesis' },
+      { question: 'What is the largest organ in the human body?', answers: ['A. Liver', 'B. Heart', 'C. Brain', 'D. Skin'], correctAnswer: 'D. Skin' },
+      { question: 'Which gas is essential for photosynthesis?', answers: ['A. Oxygen', 'B. Carbon dioxide', 'C. Nitrogen', 'D. Hydrogen'], correctAnswer: 'B. Carbon dioxide' },
+      { question: 'Which part of the human body is affected by diabetes?', answers: ['A. Heart', 'B. Liver', 'C. Pancreas', 'D. Kidney'], correctAnswer: 'C. Pancreas' },
+      { question: 'What is the longest bone in the human body?', answers: ['A. Femur', 'B. Tibia', 'C. Fibula', 'D. Humerus'], correctAnswer: 'A. Femur' },
+      { question: 'What is the main function of the red blood cells?', answers: ['A. Transportation of oxygen', 'B. Protection against diseases', 'C. Blood clotting', 'D. Muscle movement'], correctAnswer: 'A. Transportation of oxygen' },
+      { question: 'Which organ is responsible for detoxifying the blood and storing vitamins?', answers: ['A. Liver', 'B. Kidney', 'C. Spleen', 'D. Pancreas'], correctAnswer: 'A. Liver' },
+      { question: 'What is the basic unit of heredity?', answers: ['A. Chromosome', 'B. Gene', 'C. DNA', 'D. Nucleotide'], correctAnswer: 'B. Gene' },
+      { question: 'Which gland produces insulin?', answers: ['A. Thyroid', 'B. Adrenal', 'C. Pancreas', 'D. Pituitary'], correctAnswer: 'C. Pancreas' },
+      { question: 'What is the chemical formula for glucose?', answers: ['A. C6H12O6', 'B. H2O', 'C. CO2', 'D. CH4'], correctAnswer: 'A. C6H12O6' },
+      { question: 'Which part of the plant anchors it to the ground and absorbs water and nutrients?', answers: ['A. Stem', 'B. Leaf', 'C. Root', 'D. Flower'], correctAnswer: 'C. Root' },
+      { question: 'What is the process by which food is broken down into smaller molecules that can be absorbed by the body?', answers: ['A. Digestion', 'B. Respiration', 'C. Excretion', 'D. Circulation'], correctAnswer: 'A. Digestion' },
+      { question: 'Which structure connects the mouth to the stomach?', answers: ['A. Esophagus', 'B. Trachea', 'C. Bronchus', 'D. Small intestine'], correctAnswer: 'A. Esophagus' },
+      { question: 'What is the name of the pigment that gives skin its color?', answers: ['A. Melanin', 'B. Hemoglobin', 'C. Collagen', 'D. Keratin'], correctAnswer: 'A. Melanin' },
+      { question: 'Which part of the plant is responsible for the process of transpiration?', answers: ['A. Leaf', 'B. Stem', 'C. Root', 'D. Flower'], correctAnswer: 'A. Leaf' },
+      { question: 'What is the name of the process by which plants lose water vapor through their leaves?', answers: ['A. Transpiration', 'B. Photosynthesis', 'C. Respiration', 'D. Circulation'], correctAnswer: 'A. Transpiration' },
+      { question: 'Which part of the human brain is responsible for controlling balance and coordination?', answers: ['A. Cerebellum', 'B. Cerebrum', 'C. Medulla', 'D. Thalamus'], correctAnswer: 'A. Cerebellum' },
+      { question: 'What is the name of the sac that surrounds and protects the heart?', answers: ['A. Pericardium', 'B. Pleura', 'C. Peritoneum', 'D. Diaphragm'], correctAnswer: 'A. Pericardium' },
+      { question: 'What is the name of the smallest bone in the human body?', answers: ['A. Stapes', 'B. Femur', 'C. Tibia', 'D. Radius'], correctAnswer: 'A. Stapes' },
+{ question: 'What is the main function of the white blood cells?', answers: ['A. Transportation of oxygen', 'B. Protection against diseases', 'C. Blood clotting', 'D. Muscle movement'], correctAnswer: 'B. Protection against diseases' },
+      { question: 'Which gas is released during respiration?', answers: ['A. Oxygen', 'B. Carbon dioxide', 'C. Nitrogen', 'D. Hydrogen'], correctAnswer: 'B. Carbon dioxide' },
+      { question: 'Which part of the human body is affected by Parkinson\'s disease?', answers: ['A. Brain', 'B. Liver', 'C. Heart', 'D. Kidney'], correctAnswer: 'A. Brain' },
+      { question: 'What is the function of the alveoli in the respiratory system?', answers: ['A. Transporting oxygen to cells', 'B. Producing hormones', 'C. Exchanging gases', 'D. Filtering blood'], correctAnswer: 'C. Exchanging gases' },
+      { question: 'Which organ is responsible for filtering waste from the blood and producing urine?', answers: ['A. Liver', 'B. Kidney', 'C. Pancreas', 'D. Spleen'], correctAnswer: 'B. Kidney' },
+      { question: 'What is the name of the protein that carries oxygen in the blood?', answers: ['A. Hemoglobin', 'B. Insulin', 'C. Collagen', 'D. Keratin'], correctAnswer: 'A. Hemoglobin' },
+      { question: 'Which type of blood vessel carries blood away from the heart?', answers: ['A. Artery', 'B. Vein', 'C. Capillary', 'D. Aorta'], correctAnswer: 'A. Artery' },
+      { question: 'What is the name of the fluid that lubricates joints and nourishes cartilage?', answers: ['A. Synovial fluid', 'B. Lymph', 'C. Plasma', 'D. Cerebrospinal fluid'], correctAnswer: 'A. Synovial fluid' },
+      { question: 'What is the name of the tube that connects the throat to the stomach?', answers: ['A. Esophagus', 'B. Trachea', 'C. Bronchus', 'D. Small intestine'], correctAnswer: 'A. Esophagus' },
+      { question: 'What is the primary function of the respiratory system?', answers: ['A. Pumping blood', 'B. Breaking down food', 'C. Exchanging gases', 'D. Producing hormones'], correctAnswer: 'C. Exchanging gases' },
+      { question: 'Which gland is known as the "master gland" of the body?', answers: ['A. Thyroid', 'B. Adrenal', 'C. Pancreas', 'D. Pituitary'], correctAnswer: 'D. Pituitary' },
+      { question: 'What is the name of the process by which cells convert glucose into energy?', answers: ['A. Photosynthesis', 'B. Respiration', 'C. Digestion', 'D. Fermentation'], correctAnswer: 'B. Respiration' },
+      { question: 'What is the function of the rib cage?', answers: ['A. Protecting the heart', 'B. Protecting the liver', 'C. Supporting the lungs', 'D. Aiding digestion'], correctAnswer: 'C. Supporting the lungs' },
+      { question: 'What is the main function of the cerebrum in the human brain?', answers: ['A. Controlling balance and coordination', 'B. Processing sensory information', 'C. Controlling involuntary functions', 'D. Regulating body temperature'], correctAnswer: 'B. Processing sensory information' },
+      { question: 'Which part of the plant is responsible for absorbing sunlight and carrying out photosynthesis?', answers: ['A. Stem', 'B. Leaf', 'C. Root', 'D. Flower'], correctAnswer: 'B. Leaf' },
+      { question: 'What is the name of the process by which plants convert light energy into chemical energy?', answers: ['A. Respiration', 'B. Transpiration', 'C. Photosynthesis', 'D. Circulation'], correctAnswer: 'C. Photosynthesis' },
+      { question: 'What is the name of the cell organelle that contains the genetic material and controls cell activities?', answers: ['A. Mitochondria', 'B. Nucleus', 'C. Ribosome', 'D. Endoplasmic reticulum'], correctAnswer: 'B. Nucleus' },
+      { question: 'Which part of the human brain is responsible for regulating basic bodily functions such as breathing and heart rate?', answers: ['A. Cerebellum', 'B. Cerebrum', 'C. Medulla', 'D. Thalamus'], correctAnswer: 'C. Medulla' },
+      { question: 'What is the name of the process by which organisms produce offspring similar to themselves?', answers: ['A. Reproduction', 'B. Respiration', 'C. Digestion', 'D. Circulation'], correctAnswer: 'A. Reproduction' },
+      { question: 'What is the name of the condition characterized by excessive body fat?', answers: ['A. Obesity', 'B. Anorexia', 'C. Diabetes', 'D. Arthritis'], correctAnswer: 'A. Obesity' },
+      { question: 'Which part of the human body is responsible for regulating blood sugar levels?', answers: ['A. Pancreas', 'B. Liver', 'C. Kidney', 'D. Heart'], correctAnswer: 'A. Pancreas' },
+      { question: 'What is the name of the muscle that separates the chest from the abdomen and aids in breathing?', answers: ['A. Diaphragm', 'B. Biceps', 'C. Quadriceps', 'D. Hamstring'], correctAnswer: 'A. Diaphragm' },
+      { question: 'What is the name of the pigment that gives blood its red color?', answers: ['A. Hemoglobin', 'B. Melanin', 'C. Collagen', 'D. Keratin'], correctAnswer: 'A. Hemoglobin' },
+      { question: 'Which part of the human body is responsible for producing insulin?', answers: ['A. Pancreas', 'B. Liver', 'C. Kidney', 'D. Stomach'], correctAnswer: 'A. Pancreas' },
+      { question: 'What is the name of the process by which waste products are removed from the body?', answers: ['A. Excretion', 'B. Digestion', 'C. Absorption', 'D. Circulation'], correctAnswer: 'A. Excretion' },
+      { question: 'Which type of blood vessel carries blood back to the heart?', answers: ['A. Vein', 'B. Artery', 'C. Capillary', 'D. Aorta'], correctAnswer: 'A. Vein' },
+      { question: 'What is the name of the fluid that transports nutrients and oxygen to cells and removes waste products?', answers: ['A. Blood', 'B. Lymph', 'C. Plasma', 'D. Cerebrospinal fluid'], correctAnswer: 'A. Blood' },
+      { question: 'Which structure is responsible for producing eggs in the female reproductive system?', answers: ['A. Ovary', 'B. Uterus', 'C. Fallopian tube', 'D. Vagina'], correctAnswer: 'A. Ovary' },
+      { question: 'What is the name of the process by which an organism grows and develops?', answers: ['A. Growth', 'B. Metabolism', 'C. Reproduction', 'D. Development'], correctAnswer: 'D. Development' },
+      { question: 'What is the name of the membrane that surrounds the brain and spinal cord?', answers: ['A. Meninges', 'B. Peritoneum', 'C. Pleura', 'D. Pericardium'], correctAnswer: 'A. Meninges' },
+      { question: 'Which part of the human body is responsible for producing antibodies?', answers: ['A. Lymph nodes', 'B. Spleen', 'C. Bone marrow', 'D. Thymus'], correctAnswer: 'C. Bone marrow' },
+      { question: 'What is the name of the process by which nutrients are absorbed into the bloodstream from the digestive system?', answers: ['A. Absorption', 'B. Digestion', 'C. Circulation', 'D. Respiration'], correctAnswer: 'A. Absorption' },
+      { question: 'Which part of the human body is responsible for filtering and purifying blood?', answers: ['A. Kidney', 'B. Liver', 'C. Pancreas', 'D. Stomach'], correctAnswer: 'A. Kidney' },
+      { question: 'What is the name of the bone that forms the upper arm?', answers: ['A. Humerus', 'B. Radius', 'C. Ulna', 'D. Femur'], correctAnswer: 'A. Humerus' },
+      { question: 'Which part of the human body is responsible for regulating body temperature and water balance?', answers: ['A. Skin', 'B. Liver', 'C. Kidney', 'D. Pancreas'], correctAnswer: 'A. Skin' },
+      { question: 'What is the name of the process by which an organism converts food into energy?', answers: ['A. Metabolism', 'B. Photosynthesis', 'C. Respiration', 'D. Digestion'], correctAnswer: 'A. Metabolism' },
+      { question: 'Which part of the human eye is responsible for focusing light onto the retina?', answers: ['A. Lens', 'B. Cornea', 'C. Retina', 'D. Iris'], correctAnswer: 'A. Lens' },
+      { question: 'What is the name of the fluid that surrounds and protects the fetus in the womb?', answers: ['A. Amniotic fluid', 'B. Synovial fluid', 'C. Cerebrospinal fluid', 'D. Lymph'], correctAnswer: 'A. Amniotic fluid' },
+      { question: 'Which part of the human body is responsible for producing red blood cells?', answers: ['A. Bone marrow', 'B. Spleen', 'C. Liver', 'D. Kidney'], correctAnswer: 'A. Bone marrow' },
+      { question: 'What is the name of the hormone responsible for regulating blood sugar levels?', answers: ['A. Insulin', 'B. Glucagon', 'C. Adrenaline', 'D. Thyroxine'], correctAnswer: 'A. Insulin' },
+      { question: 'Which part of the human body is responsible for producing bile?', answers: ['A. Liver', 'B. Gallbladder', 'C. Pancreas', 'D. Stomach'], correctAnswer: 'A. Liver' },
+      { question: 'What is the name of the process by which water is lost through the skin and respiratory system?', answers: ['A. Evaporation', 'B. Transpiration', 'C. Condensation', 'D. Precipitation'], correctAnswer: 'A. Evaporation' },
+      { question: 'Which part of the human body is responsible for producing saliva?', answers: ['A. Salivary glands', 'B. Liver', 'C. Stomach', 'D. Pancreas'], correctAnswer: 'A. Salivary glands' },
+      { question: 'What is the name of the bone that forms the lower leg?', answers: ['A. Tibia', 'B. Fibula', 'C. Femur', 'D. Patella'], correctAnswer: 'A. Tibia' },
+      { question: 'Which part of the human body is responsible for producing tears?', answers: ['A. Lacrimal glands', 'B. Salivary glands', 'C. Pancreas', 'D. Thyroid gland'], correctAnswer: 'A. Lacrimal glands' }
+    ];
+
+    const questionElement = document.querySelector('.question');
+    const optionsContainer = document.querySelector('.options');
+    const feedbackElement = document.querySelector('.feedback');
+    const nextButton = document.querySelector('.next-question');
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function showQuestion() {
+      const currentQuestion = questions[currentQuestionIndex];
+      questionElement.textContent = currentQuestion.question;
+
+      // Clear previous options and feedback
+      optionsContainer.innerHTML = '';
+      feedbackElement.textContent = '';
+
+      // Display options
+      currentQuestion.answers.forEach(answer => {
+        const option = document.createElement('button');
+        option.textContent = answer;
+        option.classList.add('option');
+        optionsContainer.appendChild(option);
+      });
+    }
+
+    function checkAnswer(selectedOption) {
+      const currentQuestion = questions[currentQuestionIndex];
+      if (selectedOption === currentQuestion.correctAnswer) {
+        feedbackElement.textContent = 'Correct!';
+        feedbackElement.style.color = 'green';
+        score++;
+      } else {
+        feedbackElement.textContent = 'Incorrect. Try again!';
+        feedbackElement.style.color = 'red';
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        showQuestion();
+      } else {
+        endQuiz();
+      }
+    }
+
+    function endQuiz() {
+      questionElement.textContent = 'Quiz Completed!';
+      optionsContainer.innerHTML = '';
+      feedbackElement.textContent = '';
+      nextButton.style.display = 'none';
+
+      const scoreElement = document.createElement('p');
+      scoreElement.textContent = 'Your total score is: ' + score + '/' + questions.length;
+      scoreElement.style.fontWeight = 'bold';
+      scoreElement.style.marginTop = '20px';
+      document.querySelector('.quiz-container').appendChild(scoreElement);
+    }
+
+    // Event listeners
+    optionsContainer.addEventListener('click', (event) => {
+      if (event.target.classList.contains('option')) {
+        const selectedOption = event.target.textContent;
+        checkAnswer(selectedOption);
+      }
+    });
+
+    nextButton.addEventListener('click', nextQuestion);
+
+    // Show the first question
+    showQuestion();
+  </script>
+</body>
+</html>
+
+
